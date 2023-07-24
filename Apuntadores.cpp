@@ -30,6 +30,42 @@ int main(int argc, char** argv) // argument count conteo de argumentos
     {
         std::cout << "No se dieron argumentos. Cerrado \n";
     }
+
+    // el ejercico 2 de apuntadores
+    //forma C de asignar memoria
+    int *x = (int*) malloc(sizeof(int));//el * indica que este valor va guardar en la memoria un entrero
+    //(void * es un apuntador simple)
+
+    
+    *x = 99;
+    std::cout << "sizeof int " << sizeof(int) << "\n";
+    std::cout << "x " << *x << " en " << x << "\n";
+    
+
+
+    //la forma c++ de asignar memoria es la siguiente
+
+    *x = 'k';
+    std::cout << "sizeof int " << sizeof(int) << "\n";
+    std::cout << "x " << *x << " en " << x << "\n";
+
+    *(x + 1) = 18;
+    std::cout << "x " << *(x+1) << " en " << x+1 << "\n";
+
+    int* y = new int[100];
+    memset(y, 0, 100 * sizeof(int));
+    //genera una lista de 100 enteros aleatorios
+    int* acumulador = new int;
+    *acumulador = 0;
+    for (int i = 0; i < 100; i++)
+    {
+        y[i] = rand();
+        std::cout << "y[ " << i << "] = << en " << *(y+1) << "\n";
+        *acumulador += y[i];
+    }
+    float promedio = *acumulador / 100.0;
+    std:: cout << " promedio = " << promedio;
+
     return 0;
 }
 
