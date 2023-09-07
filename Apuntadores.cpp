@@ -3,26 +3,26 @@
 
 #include <iostream>
 
-int main(int argc, char** argv) // argument count conteo de argumentos
+void PruebaArgumentos(int argc, char** argv)
 {
     //si le metimos argumentos al programa
     if (argc > 1)
     {
-        for (int i = 1; i < argc; i++ )
+        for (int i = 1; i < argc; i++)
         {
             std::cout << argv[i] << "\t\n";
             //toda cadena termina con un carater diagonal 0 
             int j = 0;
             int value = 0;
             std::cout << " ";
-            do 
+            do
             {
                 value = (int)argv[i][j];
-                std::cout << argv[i][j] << "= " << value << "0x" << std::hex << value  << " \n";
+                std::cout << argv[i][j] << "= " << value << "0x" << std::hex << value << " \n";
                 j++;
             } while (argv[i][j] != 0);
-            
-            
+
+
             std::cout << "\n";
         }
     }
@@ -30,44 +30,140 @@ int main(int argc, char** argv) // argument count conteo de argumentos
     {
         std::cout << "No se dieron argumentos. Cerrado \n";
     }
+}
 
+void Promedio(int argc, char** argv)
+{
     // el ejercico 2 de apuntadores
     //forma C de asignar memoria
-    int *x = (int*) malloc(sizeof(int));//el * indica que este valor va guardar en la memoria un entrero
+    //int* x = (int*)malloc(sizeof(int));//el * indica que este valor va guardar en la memoria un entrero
     //(void * es un apuntador simple)
 
-    
-    *x = 99;
-    std::cout << "sizeof int " << sizeof(int) << "\n";
-    std::cout << "x " << *x << " en " << x << "\n";
-    
+
+   // *x = 99;
+    //std::cout << "sizeof int " << sizeof(int) << "\n";
+    //std::cout << "x " << *x << " en " << x << "\n";
+
 
 
     //la forma c++ de asignar memoria es la siguiente
 
-    *x = 'k';
-    std::cout << "sizeof int " << sizeof(int) << "\n";
-    std::cout << "x " << *x << " en " << x << "\n";
+    //*x = 'k';
+    //std::cout << "sizeof int " << sizeof(int) << "\n";
+   // std::cout << "x " << *x << " en " << x << "\n";
 
-    *(x + 1) = 18;
-    std::cout << "x " << *(x+1) << " en " << x+1 << "\n";
+    //*(x + 1) = 18;
+    //std::cout << "x " << *(x + 1) << " en " << x + 1 << "\n";
 
-    int* y = new int[100];
-    memset(y, 0, 100 * sizeof(int));
+    
+    // 
+    //int* y = new int[214748369];
+    //char continua;
+    //bool continuar = true;
+   // memset(y, 0, sizeof(int));
     //genera una lista de 100 enteros aleatorios
+
+    /**/
     int* acumulador = new int;
     *acumulador = 0;
+    char* continuar = new char;
+    *continuar = 64;
+    float* division = new float;
+    *division = 0.0;
+
+    int* y = new int[100];
+    memset(y, 64, 100 * sizeof(int));
+    /*
+        for (int i = 0; i < 214748369; i++)
+        {
+            if (continuar)
+            {
+                division += 1;
+                std::cout << "dame los valores para sacar promedio  : \n";
+                std::cin >> y[i];
+                std::cout << "y[" << i << "] = " << y[i] << "\n";
+                *acumulador += y[i];
+            }
+            if (continuar || continuar == false)
+            {
+                std::cout << "continuar? si/no  : \n";
+                std::cin >> continua;
+            }
+            if (continua == 's')
+            {
+                continuar = true;
+                continua;
+            }
+            else
+                continuar = false;
+            i -= 1;
+
+        }
+        float promedio = *acumulador / division;
+        std::cout << " promedio = " << promedio;
+
+    }*/
+
     for (int i = 0; i < 100; i++)
     {
-        y[i] = rand();
-        std::cout << "y[ " << i << "] = << en " << *(y+1) << "\n";
-        *acumulador += y[i];
-    }
-    float promedio = *acumulador / 100.0;
-    std:: cout << " promedio = " << promedio;
+        std::cout << "Escribe un numero\n" << std::endl;
+        std::cin >> y[i];
 
-    return 0;
+        if (y[i] > 0)
+        {
+            std::cout << " y[" << i << "] = " << *(y + i) << "\n";
+            *division += 1.0;
+            *acumulador += y[i];
+
+            std::cout << "quieres continuar?\n";
+            std::cin >> *continuar;
+
+            if (*continuar == 121)
+            {
+
+            }
+            else if(*continuar == 110)
+            {
+                std::cout << "Aqui esta el promedio: \n";
+                break;
+            }
+        }
+    }
+    float promedio = *acumulador / *division;
+    std::cout << " promedio = " << promedio << "\n";
 }
+
+    int main(int argc, char** argv) // argument count conteo de argumentos
+    {
+        //apuntador a funcion
+        void (*proceso)(int, char**) = nullptr;
+
+        //preguntar al usuario la funcion deseada
+        std::cout << "Funciones disponibles: \n";
+        std::cout << "  1. Prueba de argumentos \n";
+        std::cout << "  2. Promedio: \n";
+        std::cout << "Ingresa el numero de la funcion que quieres \n";
+
+        int seleccion;
+        std::cin >> seleccion;
+        std::cout << seleccion << "mem: " << &seleccion << "\n";
+        if (seleccion == 1)
+            proceso = &PruebaArgumentos;
+        else if (seleccion == 2)
+            proceso = &Promedio;
+        else
+        {
+            std::cout << "Opcion no valida\n";
+            main(argc, argv);
+        }
+
+        (*proceso)(argc, argv);
+
+
+        return 0;
+    }
+
+
 
 // Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
 // Depurar programa: F5 o menú Depurar > Iniciar depuración
